@@ -1,0 +1,67 @@
+Assignmetn-9
+
+Write an explicit cursor to 
+ i) display employee name, address ,salary along with age category 
+(young or old)
+ ii) display count of young and old employees 
+
+
+CREATE TABLE Employee5 (
+    ID NUMBER PRIMARY KEY,
+    Name VARCHAR2(100),
+    Age NUMBER,
+    Address VARCHAR2(255),
+    Salary NUMBER
+);
+
+insert into Employee5 values(1,'Lokesh',24,'Nashik',50000);
+insert into Employee5 values(2,'Nilesh',26,'Pune',55000);
+insert into Employee5 values(3,'Yogesh',42,'Mumbai',45000);
+insert into Employee5 values(4,'Amit',48,'Bangalore',40000);
+insert into Employee5 values(5,'Om',17,'Noida',35000);
+
+DESC Employee5
+
+select * from Employee5
+
+DECLARE
+    emp_name Employee5.name%TYPE;
+    emp_address Employee5.address%TYPE;
+    emp_salary Employee5.salary%TYPE;
+    emp_age Employee5.age%TYPE;
+    
+    young_count NUMBER := 0;
+    old_count NUMBER := 0;
+    
+    CURSOR emp_employee5 IS
+        SELECT name, address, salary, age
+        FROM Employee5;
+
+BEGIN
+    OPEN emp_employee5;
+   
+    LOOP
+        FETCH emp_employee5 INTO emp_name, emp_address, emp_salary, emp_age;
+        EXIT WHEN emp_employee5%NOTFOUND;
+        
+        IF emp_age < 30 THEN
+            DBMS_OUTPUT.PUT_LINE(emp_name || ', ' || emp_address || ', ' || emp_salary || ', Young');
+            DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------');
+            young_count := young_count + 1;
+        ELSE
+            DBMS_OUTPUT.PUT_LINE(emp_name || ', ' || emp_address || ', ' || emp_salary || ', Old');
+            DBMS_OUTPUT.PUT_LINE('----------------------------------------------------------------');
+            old_count := old_count + 1;
+        END IF;
+    END LOOP;
+    
+    CLOSE emp_employee5;
+    
+    DBMS_OUTPUT.PUT_LINE('Young employees: ' || young_count);
+    DBMS_OUTPUT.PUT_LINE('Old employees: ' || old_count);
+    
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No more data to fetch.');
+END;
+/
