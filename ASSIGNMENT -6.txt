@@ -1,4 +1,22 @@
 Assignment-6
+Study & Implementation of PL/SQL
+Create table student(Rollno, name, percentage). Insert suitable records in 
+the table.
+Write a PL/SQL block of code for the following requirements:-
+ Accept rollno from user
+ Retrieve name and percentage of the students with rollno given by 
+user.
+ calculate grade of that student as per follows
+Percentage>=80 then grade=A+
+Percentage>=70 and <80 then grade=A
+Percentage>=60 and <70 then grade=B+
+Percentage>=50 and <60 then grade=B
+Percentage>=40 and <50 then grade=C
+Percentage below 40 then grade = fail
+ print rollno, name, percentage and grade of student
+use appropriate control structure and exception handling
+
+Answer- 
 CREATE TABLE student10 (
 Rollno NUMBER,
 Name VARCHAR2(50),
