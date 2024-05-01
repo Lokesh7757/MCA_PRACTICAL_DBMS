@@ -1,0 +1,99 @@
+ASSIGNMENT -2
+
+A) Employee (ID:integer, person_name:string, street:string, city:integer)
+works (ID:integer, company name: string)
+
+company (company name string, city: string) manages (ID: integer, manager_id:
+integer)
+
+Underlined attributes are primary key
+
+1. Create tables with ORACLE using SQL DDL statements
+2. add column (salary: integr) in works table
+3 modify the type of city column in employee to string
+4 delete column street from employee table
+5 change the name of the column manager id to manager in manages table
+6. rename table company to CMP
+7. Drop table manages
+
+B) Consider the given relational table
+employee(empno, empname, designation, city, salary, zipcode, county)
+Creates a sequence used to generate employce numbers for the empno column
+of
+the emp table.
+
+3. Create a view for employees having salary <50000 and stays in "Mumbai"
+2. Create an Index on county
+ANSWER-
+CREATE TABLE employee (
+
+ID INTEGER PRIMARY KEY,
+person_name VARCHAR2(255),
+street VARCHAR2(255),
+city INTEGER
+);
+
+CREATE TABLE works (
+ID INTEGER PRIMARY KEY,
+company_name VARCHAR2(255)
+);
+
+CREATE TABLE company (
+company_name VARCHAR2(255) PRIMARY KEY,
+city VARCHAR2(255)
+);
+
+CREATE TABLE manages (
+ID INTEGER PRIMARY KEY,
+manager_id INTEGER
+);
+
+1) ALTER TABLE works1
+ADD salary INT;
+
+2) ALTER TABLE employee1
+MODIFY city VARCHAR2(30);
+
+3) ALTER TABLE EMPLOYEE1
+DROP COLUMN street;
+
+4) ALTER TABLE manages1
+RENAME COLUMN manager_id TO manager;
+
+5) ALTER TABLE company1 RENAME TO CMP1;
+
+6) DROP TABLE manages1;
+
+B) Consider the given relational table: employee(empno, empname, designation, city, salary, zipcode, county)
+
+1. Creates a sequence used to genes de employce numbers for the empno
+column of the emp table.
+2. Create an Index on county
+
+3. Create a view for employees having salary <50000 and stays in 'Mumbai'
+
+ANSWER-
+CREATE TABLE employees1 (
+
+empno INTEGER PRIMARY KEY,
+empname VARCHAR(50),
+designation VARCHAR(20),
+city VARCHAR(20),
+salary INTEGER,
+zipcode VARCHAR(10),
+county VARCHAR(25)
+);
+
+1) CREATE SEQUENCE empsno_sequence
+START WITH 1
+INCREMENT BY 1
+NOMAXVALUE;
+
+2) CREATE INDEX county_index
+ON employees1 (county);
+
+3) CREATE VIEW MumbaiEmployeees AS
+SELECT *
+FOM employees1
+WHERE salary < 50000 AND city = 'Mumbai';
+
