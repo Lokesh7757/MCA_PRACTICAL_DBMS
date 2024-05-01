@@ -1,0 +1,147 @@
+CREATE TABLE Sailor (
+sid INTEGER PRIMARY KEY,
+sname VARCHAR2(255),
+rating INTEGER,
+age REAL
+);
+
+CREATE TABLE Boat (
+bid INTEGER PRIMARY KEY,
+bname VARCHAR2(255),
+color VARCHAR2(255)
+);
+
+CREATE TABLE Reserves (
+sid INTEGER,
+bid INTEGER,
+day DATE,
+PRIMARY KEY (sid, bid, day),
+FOREIGN KEY (sid) REFERENCES Sailor(sid),
+FOREIGN KEY (bid) REFERENCES Boat(bid)
+);
+
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (22, 'Dustin', 7, 45.0);
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (29, 'Brutus', 1, 33.0);
+
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (31, 'Lubber', 8, 55.5);
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (32, 'Andy', 8, 25.5);
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (58, 'Rusty', 10, 35.0);
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (64, 'Horatio', 7, 35.0);
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (71, 'Zorba', 10, 16.0);
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (74, 'Horatio', 9, 35.0);
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (85, 'Art', 3, 25.5);
+INSERT INTO Sailor (sid, sname, rating, age) VALUES (95, 'Bob', 3, 63.5);
+
+INSERT INTO Boat (bid, bname, color) VALUES (101, 'Interlake', 'blue');
+INSERT INTO Boat (bid, bname, color) VALUES (102, 'Interlake', 'red');
+INSERT INTO Boat (bid, bname, color) VALUES (103, 'Clipper', 'green');
+INSERT INTO Boat (bid, bname, color) VALUES (104, 'Marine', 'red');
+
+INSERT INTO Reserves (sid, bid, day) VALUES (22, 101, TO_DATE('10/10/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (22, 102, TO_DATE('10/10/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (22, 103, TO_DATE('10/8/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (22, 104, TO_DATE('10/7/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (31, 102, TO_DATE('11/10/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (31, 103, TO_DATE('11/6/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (31, 104, TO_DATE('12/12/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (64, 101, TO_DATE('9/5/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (64, 102, TO_DATE('9/8/98'));
+INSERT INTO Reserves (sid, bid, day) VALUES (74, 103, TO_DATE('9/8/98'));
+
+SELECT * FROM SAILOR
+
+1) SELECT sname, age FROM Sailor;
+
+2) SELECT * FROM Sailor
+WHERE rating > 7;
+
+3) UPDATE Sailor
+SET rating = rating * 1.10
+WHERE age < 40;
+
+4) UPDATE Sailor
+SET rating = rating + 2
+WHERE sid IN (SELECT r.sid FROM Reserves r WHERE r.day = TO_DATE('11/12/98'));
+
+5) DELETE FROM Sailor
+WHERE rating < 3 AND age > 60;
+
+6) UPDATE Sailor
+SET sname = NULL
+WHERE sid IN (SELECT r.sid FROM Reserves r WHERE r.bid = 102);
+
+-------------------------------------------------------------------------------------------------------
+
+PART-B
+
+1) SELECT UPPER(s.sname) AS sailor_name
+FROM Sailor s
+JOIN Reserves r ON s.sid = r.sid
+JOIN Boat b ON r.bid = b.bid
+WHERE b.bname = 'Interlake';
+
+2) SELECT rating
+FROM Sailor
+WHERE INSTR(sname, 'us') > 0;
+3) SELECT AVG(age) AS avg_age
+FROM Sailor
+WHERE rating = 8;
+
+4) SELECT COUNT(*) AS sailor_count
+FROM Sailor
+WHERE rating > 5;
+
+5) SELECT ADD_MONTHS(day, 2) AS new_reservation_date
+FROM Reserves
+WHERE sid = 64 AND bid = 101;
+
+6) SELECT MONTHS_BETWEEN(SYSDATE,
+TO_DATE('12/02/2021', 'MM/DD/YYYY')) AS months_difference
+FROM dual;
+
+7) SELECT b.bname, TO_CHAR(r.day, 'Month') AS reservation_month
+FROM Reserves r
+JOIN Boat b ON r.bid = b.bid;
+
+9) SELECT SQRT(age) AS sqrt_age
+FROM Sailor;
+
+10) SELECT TO_CHAR(day, 'DD-Mon-YYYY') AS formatted_date
+FROM Reserves;
+
+11) SELECT MIN(rating) AS min_rating, MAX(rating) AS max_rating
+FROM Sailor;
+
+----------------------------------------------------------------------------------------------
+
+PART- C
+1) SELECT sname, age
+FROM Sailor
+WHERE LENGTH(sname) >= 3 AND UPPER(SUBSTR(sname, 1, 1)) = 'B' AND
+UPPER(SUBSTR(sname, -1, 1)) = 'B';
+
+2) SELECT sname, age
+FROM Sailor
+WHERE UPPER(SUBSTR(sname, 1, 1)) IN ('A', 'L');
+
+3) SELECT sname
+FROM Sailor
+WHERE rating > 7 AND age BETWEEN 33 AND 45;
+
+4) SELECT s.sname
+FROM Sailor s
+WHERE NOT EXISTS (
+SELECT 1
+FROM Reserves r
+WHERE r.sid = s.sid AND r.day = TO_DATE('10/10/98', 'MM/DD/YY'));
+
+5) SELECT s.sname
+FROM Sailor s
+WHERE s.sid IN (SELECT r.sid FROM Reserves r WHERE r.bid = 103);
+
+6) SELECT s.sname
+FROM Sailor s
+WHERE EXISTS (
+SELECT 1
+FROM Reserves r
+WHERE r.sid = s.sid AND r.bid = 103);
