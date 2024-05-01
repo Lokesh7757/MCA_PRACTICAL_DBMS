@@ -16,14 +16,6 @@ Underlined attributes are primary key
 6. rename table company to CMP
 7. Drop table manages
 
-B) Consider the given relational table
-employee(empno, empname, designation, city, salary, zipcode, county)
-Creates a sequence used to generate employce numbers for the empno column
-of
-the emp table.
-
-3. Create a view for employees having salary <50000 and stays in "Mumbai"
-2. Create an Index on county
 ANSWER-
 CREATE TABLE employee (
 
@@ -64,17 +56,17 @@ RENAME COLUMN manager_id TO manager;
 
 6) DROP TABLE manages1;
 
+-----------------------------------------------------------------------------------------------------------------
+
 B) Consider the given relational table: employee(empno, empname, designation, city, salary, zipcode, county)
 
 1. Creates a sequence used to genes de employce numbers for the empno
 column of the emp table.
 2. Create an Index on county
-
 3. Create a view for employees having salary <50000 and stays in 'Mumbai'
 
 ANSWER-
 CREATE TABLE employees1 (
-
 empno INTEGER PRIMARY KEY,
 empname VARCHAR(50),
 designation VARCHAR(20),
