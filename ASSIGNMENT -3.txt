@@ -1,3 +1,13 @@
+ASSIGNMENT-3
+
+Write at least 10 SQL queries on the suitable database application using 
+SQL DML statements: Insert, Select, Update, Delete with 
+operators(Arithmetic Operators, Logical Operators, Comparison Operator, 
+Special Operator), functions (Number function, Aggregate Function, 
+Character Function, Conversion Function, Date Function)
+
+Answer -
+
 CREATE TABLE Sailor (
 sid INTEGER PRIMARY KEY,
 sname VARCHAR2(255),
