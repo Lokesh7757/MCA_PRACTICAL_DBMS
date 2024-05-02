@@ -1,0 +1,57 @@
+ASSIGNMENT-10
+
+Write a Pl/SQL block to calculate gross salary on basis of basic salary. If 
+DA is 40% of basic ,HRA is 20% of basic and PF deduction is 12% of 
+basic salary.
+Gross salary=Basic Salary+DA+HRA-PF
+Accept basic salary from user and pass it to function, function will return 
+gross salary
+
+create table employees
+(employee_id int primary key,
+ename varchar(20),
+basic_salary number);
+
+drop table employees
+
+insert into employees values(1,'Lokesh',40000);
+insert into employees values(2,'Virat',30000);
+insert into employees values(3,'Ajinkya',35000);
+insert into employees values(4,'Amit',35000);
+insert into employees values(5,'Ajit',28000);
+
+
+select * from employees
+
+
+
+DECLARE
+basic_salary employees.basic_salary%TYPE;
+da NUMBER;
+hra NUMBER;
+pf NUMBER;
+gross_salary NUMBER;
+
+FUNCTION calculate_gross_salary(p_basic_salary NUMBER) RETURN NUMBER IS
+BEGIN
+da := p_basic_salary * 0.4; -- DA is 40% of basic
+hra := p_basic_salary * 0.2; -- HRA is 20% of basic
+pf := p_basic_salary * 0.12; -- PF deduction is 12% of basic salary
+gross_salary := p_basic_salary + da + hra - pf; -- Calculate gross salary
+
+RETURN gross_salary;
+END calculate_gross_salary;
+
+BEGIN
+
+SELECT basic_salary INTO basic_salary
+FROM employees
+WHERE employee_id = :input_employee_id;
+
+gross_salary := calculate_gross_salary(basic_salary);
+
+DBMS_OUTPUT.PUT_LINE('Gross salary:' || gross_salary);
+EXCEPTION
+WHEN NO_DATA_FOUND THEN
+DBMS_OUTPUT.PUT_LINE('Employee not found.');
+END;
